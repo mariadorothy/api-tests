@@ -1,4 +1,4 @@
-name: Run API Tests
+name: 🧪 Run API Tests with Newman
 
 on:
   push:
@@ -7,20 +7,30 @@ on:
     branches: [ main ]
 
 jobs:
-  newman-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: 📥 Checkout Code
       uses: actions/checkout@v3
 
-    - name: Set up Node.js
+    - name: 🛠 Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
 
-    - name: Install Newman
+    - name: 📦 Install Newman
       run: npm install -g newman
 
-    - name: Run Postman Tests
-      run: newman run postman/collection.json -e postman/environment.json
+    - name: 🚀 Run Postman Collection
+      run: |
+        newman run postman/POC_collection.json \
+          -e postman/Dev_environment.json \
+          --reporters cli,html \
+          --reporter-html-export newman-report.html
+
+    - name: 📤 Upload HTML Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: newman-report
+        path: newman-report.html

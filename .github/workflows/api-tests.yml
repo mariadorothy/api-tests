@@ -39,7 +39,7 @@ jobs:
 
     - name: 📤 Send Email using Azure Communication Services
       env:
-        ACS_CONNECTION_STRING: ${{ secrets.ACS_CONNECTION_STRING }}
+        ACS_CONNECTION_STRING: endpoint=https://emails-vero-vita-test.unitedstates.communication.azure.com/;accesskey=nSoNHnpN6emwIh4bg2tgewKvQTYkns6Qri7jzPX49h6USZt+uBHdvr/bdNwSGrxTICl3cnjf+KEx/25ZSAnkMw==
         EMAIL_SENDER: doro.luro@gmail.com
         EMAIL_RECIPIENT: mariadorothy1990@gmail.com
         REPORT_HTML: ${{ steps.read_report.outputs.encoded_report }}

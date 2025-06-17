@@ -97,51 +97,6 @@
 				"url": "{{base_url}}/apps/myapps"
 			},
 			"response": []
-		},
-		{
-			"name": "GetRoles",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"pm.environment.set(\"timestamp\", new Date().toISOString());\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Response has userId\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.userId).to.eql(1);\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": {
-						"token": "{{bearer_token}}"
-					}
-				},
-				"method": "GET",
-				"header": [],
-				"url": "{{base_url}}/apps/roles"
-			},
-			"response": []
 		}
 	]
 }

@@ -41,7 +41,7 @@ jobs:
       env:
         ACS_CONNECTION_STRING: endpoint=https://emails-vero-vita-test.unitedstates.communication.azure.com/;accesskey=nSoNHnpN6emwIh4bg2tgewKvQTYkns6Qri7jzPX49h6USZt+uBHdvr/bdNwSGrxTICl3cnjf+KEx/25ZSAnkMw==
         EMAIL_SENDER: subbiahkk@gmail.com
-        EMAIL_RECIPIENT: mariadorothy1990@gmail.com
+        EMAIL_RECIPIENT: subbiahkk@gmail.com
         REPORT_HTML: ${{ steps.read_report.outputs.encoded_report }}
       run: |
         ACS_KEY=$(echo $ACS_CONNECTION_STRING | sed -n 's/.*accesskey=\(.*\)/\1/p')

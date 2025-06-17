@@ -28,13 +28,13 @@ jobs:
         newman run postman/POC_collection.json \
           -e postman/Dev_environment.json \
           --reporters cli,htmlextra \
-          --reporter-htmlextra-export newman-report.html
+          --reporter-htmlextra-export newman/report.html
 
     - name: 📤 Upload HTML Report
       uses: actions/upload-artifact@v4
       with:
         name: newman-report
-        path: newman-report.html
+        path: newman/report.html
 
     - name: Send Email with Newman Report
       uses: dawidd6/action-send-mail@v3
@@ -45,7 +45,7 @@ jobs:
         password: Welcome@123
         subject: "Newman API Test Report"
         to: doro.luro@gmail.com
-        from: "GitHub Actions <${{ secrets.EMAIL_USERNAME }}>"
+        from: "GitHub Actions <mariadorothy1990@gmail.com>"
         body: |
           Hello,
 

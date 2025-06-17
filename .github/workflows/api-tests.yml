@@ -19,18 +19,39 @@ jobs:
       with:
         node-version: '18'
 
-    - name: 📦 Install Newman
-      run: npm install -g newman
+    - name: 📦 Install Newman with HTML Reporter
+      run: npm install -g newman newman-reporter-htmlextra
 
-    - name: 🚀 Run Postman Collection
+    - name: 🚀 Run Postman Collection and Save HTML Report
       run: |
+        mkdir -p newman
         newman run postman/POC_collection.json \
           -e postman/Dev_environment.json \
-          --reporters cli,html \
-          --reporter-html-export newman-report.html
+          --reporters cli,htmlextra \
+          --reporter-htmlextra-export newman-report.html
 
     - name: 📤 Upload HTML Report
       uses: actions/upload-artifact@v4
       with:
         name: newman-report
         path: newman-report.html
+
+    - name: Send Email with Newman Report
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: subbiahkk@gmail.com
+        password: Welcome@123
+        subject: "Newman API Test Report"
+        to: doro.luro@gmail.com
+        from: "GitHub Actions <${{ secrets.EMAIL_USERNAME }}>"
+        body: |
+          Hello,
+
+          Please find attached the latest Newman API test report from GitHub Actions.
+
+          Regards,
+          API Automation Bot
+          attachments: newman/report.html
+

@@ -66,4 +66,4 @@ jobs:
             "html": "$(echo $REPORT_HTML | base64 --decode)"
           }
         }
-EOF
+

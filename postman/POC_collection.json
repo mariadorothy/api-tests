@@ -7,6 +7,104 @@
 	},
 	"item": [
 		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Parse the JSON response\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"// Store the token in environment variable\r",
+							"pm.environment.set(\"bearer_token\", response.access_token);\r",
+							"\r",
+							"// Optionally log it\r",
+							"console.log(\"Token fetched: \" + response.access_token);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{bearer_token}}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "subbiahkk@gmail.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "Welcome@123",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "ff104445-0acf-4da3-84b7-c85c264da404",
+							"type": "text"
+						},
+						{
+							"key": "scope",
+							"value": "https://verovitadev.onmicrosoft.com/fb731259-88ef-466e-92b1-0e94fa7a7c3b/read_write_from_web_app openid profile offline_access",
+							"type": "text"
+						},
+						{
+							"key": "grant_type",
+							"value": "authorization_code",
+							"type": "text"
+						},
+						{
+							"key": "code",
+							"value": "eyJraWQiOiJTSU05X29uNXpOT19sSXBlMzE3ZnBiU215eVRqcUFUVjMzejRWMkR3REQwIiwidmVyIjoiMS4wIiwiemlwIjoiRGVmbGF0ZSIsInNlciI6IjEuMCJ9.GvqC6fcUwaMbSaw395lAlQK1evsYXo7xzMV8AdsftUB5g9hMATbjhKpKxMm0nXDCKHHp3QmLiduduK8SgFuIb3HTuMwecaPOrKHuaJUCDhPvfygI1313gJCqP4FIjycCiY_JUl1BgO2G_3ELdVASQb_7F8fexhkeENEbwaUm1KlltNC7uBy6URuzkwchb1c2lqRp3utHOfcin0MOzvv3yWRxlwChQ1un8UbTHycpOaxgvNyvwGoN6kqZPLKWFw74Zr-pqZH8fNShhVohI4XkFad7q5uHBlP827ZBwJ7q7FWOkY9nYWZNx0TuG8UFpXa1U1hLOVfHoQkG53pbYO2OUw.u8pUbYQ29mdB_Yen.5ZEPwfcymMgEAt9lWWJo5yH0wpBPCdPNYBDboeykLmp6PYoWhyp_sTtnNgoQ-atBD9SkMmnvE14QNc47fwrL9NTmUD2JPQAk6Ndh3Mr_uwle655dhmxO0M9VATtcvO_wvIKtBEWPD6Nwp4JZyus500PThvLKKFXhMurFguJu6jVnHyU5sHFYWsmO2bAjSniu7dhjkpPpeTgGSOYX2TArbsuKXLpSdmD60jf6oPvd4tAFz6vM0uZHWs2IgpM2cgyRcXcv0OEHxGpnKNTjjBN5JTUIcANlju7Sms3DopmqbG6RCZuYBir8nJqc363BqXcLHnu4W2Aq61gdQHY3FfgATSPMv04WgnhucAJ1UQJxzDw29_vazP1Oqxm65Odfg1lMVEZq9QaYj4HmXw0QR_dHZLj1ci8dE2rgHRrvTb0CSLpBi241BxDuou2eq0gSHJElMUBrgQnUqvgOFKExVVU0uBuPMyHStwk0aVJfx_Xa8iCKDDHaKOWTiGvFhQLo8nRDUwgAjsxMgWoJfoUZrYEltnZY9ab7PEb6ryof5pszMHnbi9pS-z_5J7VqiqaY1cNZ8HB8W0ihVkMNfxUgFwz0wfWR0JO4MKS3VbFcPtjw22Wh-Paoxuf3eMSIBHVdlvzVC25U3KGYYyUKWgMMzIEabzxOMxNgfaiKQ3CabHWUU7r_JPC72vo1fzkHZS1msnf3aiKmXBJcUVHaOI_F446RVZ_MjRLHzyQzmIdTAMqAojdvifM2xcPmz6DHPnqyNDtg9D9IQfUJjoyu6x5f4bAJ8Uj6Eic1TG4Y8yhZg-LDiFajzs_hTX2Z_fcDmxp0LrGtkkFwOiZD7ZZTNNhFlGZ8y26HAqJsUN2aQyIvrkyioCxA6E0YsBlVOHrreuCz0nMK6u0XG8PtGlTRvRcfZl4IL344mXw7vQoGkr_P6uoRkOhega86Gg.0YbD6EMvFRoqq9nfyBy-Hw",
+							"type": "text"
+						},
+						{
+							"key": "code_verifier",
+							"value": "UzSXRzJdtAp_h1XLGGjQhDFMUJiT3dUSqetagMV5LoA",
+							"type": "text"
+						}
+					]
+				},
+				"url": "https://login.vitadev.vero-biotech.com/verovitadev.onmicrosoft.com/b2c_1a_signup_signin/oauth2/v2.0/token"
+			},
+			"response": []
+		},
+		{
 			"name": "GetAll",
 			"event": [
 				{

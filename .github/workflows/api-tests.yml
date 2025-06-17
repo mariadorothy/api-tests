@@ -31,28 +31,39 @@ jobs:
           --reporter-htmlextra-export newman/report.html
       continue-on-error: true  # ✅ Allow next steps to run even if Newman fails
 
-    - name: 📤 Upload HTML Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: newman-report
-        path: newman/report.html
+    - name: 📄 Read HTML Report into variable
+      id: read_report
+      run: |
+        REPORT=$(cat newman/report.html | base64 -w 0)
+        echo "encoded_report=$REPORT" >> $GITHUB_OUTPUT
 
-    - name: Send Email with Newman Report
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 465
-        username: subbiahkk@gmail.com
-        password: Welcome@123
-        subject: "Newman API Test Report"
-        to: doro.luro@gmail.com
-        from: "GitHub Actions <mariadorothy1990@gmail.com>"
-        body: |
-          Hello,
+    - name: 📤 Send Email using Azure Communication Services
+      env:
+        ACS_CONNECTION_STRING: ${{ secrets.ACS_CONNECTION_STRING }}
+        EMAIL_SENDER: doro.luro@gmail.com
+        EMAIL_RECIPIENT: mariadorothy1990@gmail.com
+        REPORT_HTML: ${{ steps.read_report.outputs.encoded_report }}
+      run: |
+        ACS_KEY=$(echo $ACS_CONNECTION_STRING | sed -n 's/.*accesskey=\(.*\)/\1/p')
+        ACS_ENDPOINT=$(echo $ACS_CONNECTION_STRING | sed -n 's/.*endpoint=\(.*\);accesskey=.*/\1/p')
 
-          Please find attached the latest Newman API test report from GitHub Actions.
-
-          Regards,
-          API Automation Bot
-          attachments: newman/report.html
-
+        curl -X POST "$ACS_ENDPOINT/emails:send?api-version=2023-03-31" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer $ACS_KEY" \
+          -d @- <<EOF
+        {
+          "senderAddress": "$EMAIL_SENDER",
+          "recipients": {
+            "to": [
+              {
+                "address": "$EMAIL_RECIPIENT",
+                "displayName": "Test Report Recipient"
+              }
+            ]
+          },
+          "content": {
+            "subject": "Newman API Test Report",
+            "html": "$(echo $REPORT_HTML | base64 --decode)"
+          }
+        }
+EOF
